@@ -1,0 +1,7 @@
+.nav-item.active {
+  background-color: rgb(136, 202, 247);
+  border-radius: 10%;
+}
+.container {
+  margin-top: 30px;
+}

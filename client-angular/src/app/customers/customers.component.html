@@ -1,0 +1,50 @@
+<ng-template #customerusersmodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Here I am!
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>
+
+<div class="container mt-5">
+
+    <div class="table-responsive">
+        <table class="table">
+            <colgroup>
+                <col />
+                <col />
+                <col />
+                <col />
+                <col style="width: 120px" />
+                <col />
+            </colgroup>
+            <thead class="table-active">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Website</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Users</th>
+                    <!-- <th scope="col">CreatedOn</th>
+                        <th scope="col">ModifiedOn</th> -->
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr app-customer-row></tr> -->
+                <tr app-customer-row *ngFor="let customerItem of customers" [customer]="customerItem">
+                </tr>
+            </tbody>
+            <!-- <tr app-customer-row *ngFor="let userItem of customers" customer="userItem"
+                    (onUserDelete)="onDelete($event)"></tr> -->
+        </table>
+    </div>
+    <router-outlet></router-outlet>
+</div>

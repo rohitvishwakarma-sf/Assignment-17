@@ -1,0 +1,16 @@
+/* input[type="text"] {
+  border: none;
+  background: transparent;
+  color: #000;
+} */
+.edit {
+  /* border: none; */
+  background: rgb(250, 250, 219);
+  color: #000;
+  /* appearance: unset; */
+}
+.no-edit {
+  border: none;
+  background: transparent;
+  appearance: unset;
+}

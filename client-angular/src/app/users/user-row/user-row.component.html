@@ -1,0 +1,56 @@
+<td>{{ user.id }}</td>
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.firstName" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.middleName" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null" />
+  <!-- [ngClass]="(step=='step1')?'my-class1':'my-class2'" -->
+</td>
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.lastname" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.email" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.phone" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.address" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+<td>
+  <input type="text" class="form-control" [(ngModel)]="user.customer!.name" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="'disabled'" />
+</td>
+<td>
+  <select [(ngModel)]="user.roleKey" class="form-select" [ngClass]="editMode ? 'edit' : 'no-edit'"
+    [attr.disabled]="!editMode ? 'disabled' : null">
+    <option *ngFor="let role of roleKeys()" value="{{ role }}" [attr.selected]="user.roleKey == role ? 'true' : null">
+      {{ role }}
+    </option>
+  </select>
+</td>
+
+<td>
+  <div *ngIf="!editMode" class="d-flex">
+    <button class="btn btn-primary me-1" (click)="btnEditClick()">Edit</button>
+    <button class="btn btn-danger" (click)="btnDeleteClick()">
+      <span *ngIf="deleting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Delete
+    </button>
+  </div>
+  <div *ngIf="editMode" class="d-flex">
+    <button class="btn btn-success me-1" (click)="btnSaveClick()">
+      <span *ngIf="saving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Save
+    </button>
+    <button class="btn btn-danger" (click)="btnCancelClick()">Cancel</button>
+  </div>
+</td>

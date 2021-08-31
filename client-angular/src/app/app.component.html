@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset-1">
+      <nav class="navbar navbar-expand-sm  navbar-light bg-light p-0">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link me-5" routerLinkActive="active" routerLink="/"
+              [routerLinkActiveOptions]="{exact:true}">Home</a>
+            <a class="nav-item nav-link me-5" routerLinkActive="active" routerLink="/users">Users</a>
+            <a class="nav-item nav-link me-5" routerLinkActive="active" routerLink="/customers">Customers</a>
+            <a href="https://github.com/rohitvishwakarma-sf/Assignment-13" target="_blank">
+              <img style="max-block-size: 40px"
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="" />
+            </a>
+            <!-- <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="app-container">
+
+    <app-alert></app-alert>
+    <router-outlet></router-outlet>
+  </div>
+</div>

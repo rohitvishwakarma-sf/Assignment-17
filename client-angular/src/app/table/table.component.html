@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table">
+    <colgroup>
+      <col />
+      <col />
+      <col />
+      <col style="width: auto" />
+      <col />
+      <col />
+      <col />
+      <col />
+      <col style="width: 150px" />
+      <col />
+    </colgroup>
+    <thead class="table-active">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Middle Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+        <th scope="col">C Name</th>
+        <th scope="col">Role</th>
+        <!-- <th scope="col">CreatedOn</th>
+        <th scope="col">ModifiedOn</th> -->
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-user-row *ngFor="let userItem of users" [user]="userItem" (onUserDelete)="onDelete($event)"></tr>
+    </tbody>
+  </table>
+</div>

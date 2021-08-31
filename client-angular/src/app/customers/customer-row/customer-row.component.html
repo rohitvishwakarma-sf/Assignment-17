@@ -1,0 +1,36 @@
+<td>{{ customer.id }}</td>
+<td>
+    <input type="text" class="form-control" [(ngModel)]="customer.name" [ngClass]="editMode ? 'edit' : 'no-edit'"
+        [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+<td>
+    <input type="text" class="form-control" [(ngModel)]="customer.website" [ngClass]="editMode ? 'edit' : 'no-edit'"
+        [attr.disabled]="!editMode ? 'disabled' : null" />
+    <!-- [ngClass]="(step=='step1')?'my-class1':'my-class2'" -->
+</td>
+<td>
+    <input type="text" class="form-control" [(ngModel)]="customer.address" [ngClass]="editMode ? 'edit' : 'no-edit'"
+        [attr.disabled]="!editMode ? 'disabled' : null" />
+</td>
+<td class="d-flex">
+    <button class="btn btn-secondary pe-2" (click)="btnShowUsersClick()">Show</button>
+
+</td>
+
+
+<td>
+    <div *ngIf="!editMode" class="d-flex">
+        <button class="btn btn-primary me-1" (click)="btnEditClick()">Edit</button>
+        <button class="btn btn-danger" (click)="btnDeleteClick()">
+            <span *ngIf="deleting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Delete
+        </button>
+    </div>
+    <div *ngIf="editMode" class="d-flex">
+        <button class="btn btn-success me-1" (click)="btnSaveClick()">
+            <span *ngIf="saving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Save
+        </button>
+        <button class="btn btn-danger" (click)="btnCancelClick()">Cancel</button>
+    </div>
+</td>
