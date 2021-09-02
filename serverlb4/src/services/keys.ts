@@ -6,7 +6,7 @@ import {Credentials} from '../repositories/user.repository';
 import {User} from '../models';
 export namespace TokenServiceConstants {
   export const TOKEN_SECRET_VALUE = '123asdf5';
-  export const TOKEN_EXPIRES_IN_VALUE = '15s';
+  export const TOKEN_EXPIRES_IN_VALUE = '5d';
 }
 
 export namespace TokenServiceBindings {

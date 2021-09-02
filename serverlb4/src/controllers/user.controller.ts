@@ -32,6 +32,7 @@ import {
   UserServiceBindings,
 } from '../services/keys';
 import {authenticate} from '@loopback/authentication';
+import {PermissionKeys} from '../authorization/permission-keys';
 export class UserController {
   constructor(
     @repository(UserRepository)
@@ -108,6 +109,8 @@ export class UserController {
   ): Promise<{token: string}> {
     // make sure user exist, password should be matched
     const user = await this.userService.verifyCredentials(credentials);
+    // console.log(user);
+
     const userProfile = this.userService.convertToUserProfile(user);
     //generating token
     const token = await this.jwtService.generateToken(userProfile);
@@ -146,7 +149,16 @@ export class UserController {
   }
 
   @get('/users')
-  @authenticate('jwt')
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [
+        PermissionKeys.view,
+        PermissionKeys.edit,
+        PermissionKeys.delete,
+      ],
+    },
+  })
   @response(200, {
     description: 'Array of User model instances',
     content: {
@@ -161,7 +173,12 @@ export class UserController {
   async find(@param.filter(User) filter?: Filter<User>): Promise<User[]> {
     return this.userRepository.find(filter);
   }
-
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [PermissionKeys.delete, PermissionKeys.edit],
+    },
+  })
   @patch('/users')
   @response(200, {
     description: 'User PATCH success count',
@@ -181,7 +198,16 @@ export class UserController {
     user.modifiedOn = new Date().toString();
     return this.userRepository.updateAll(user, where);
   }
-
+  @authenticate({
+    strategy: 'jwt',
+    options: {
+      required: [
+        PermissionKeys.delete,
+        PermissionKeys.edit,
+        PermissionKeys.view,
+      ],
+    },
+  })
   @get('/users/{id}')
   @response(200, {
     description: 'User model instance',
@@ -197,7 +223,10 @@ export class UserController {
   ): Promise<User> {
     return this.userRepository.findById(id, filter);
   }
-
+  @authenticate({
+    strategy: 'jwt',
+    options: {required: [PermissionKeys.delete, PermissionKeys.edit]},
+  })
   @patch('/users/{id}')
   @response(204, {
     description: 'User PATCH success',
@@ -216,7 +245,7 @@ export class UserController {
     user.modifiedOn = new Date().toString();
     await this.userRepository.updateById(id, user);
   }
-
+  @authenticate({strategy: 'jwt', options: {required: [PermissionKeys.edit]}})
   @put('/users/{id}')
   @response(204, {
     description: 'User PUT success',
@@ -228,6 +257,7 @@ export class UserController {
     await this.userRepository.replaceById(id, user);
   }
 
+  @authenticate({strategy: 'jwt', options: {required: [PermissionKeys.delete]}})
   @del('/users/{id}')
   @response(204, {
     description: 'User DELETE success',

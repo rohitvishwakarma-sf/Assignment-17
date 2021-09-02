@@ -9,7 +9,7 @@ export class Role extends Entity {
     required: true,
     jsonSchema:{
       type:'string',
-      enum:['admin','subscriber','super_admin']
+      enum:['admin','subscriber','super_admin','manager']
     }
   })
   key: string;
@@ -24,6 +24,9 @@ export class Role extends Entity {
     type: 'string',
   })
   description?: string;
+
+  @property.array(String)
+  permissions:String[];
 
   @property({
     type: 'date',

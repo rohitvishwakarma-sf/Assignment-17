@@ -14,6 +14,7 @@ export async function migrate(args: string[]) {
   // Connectors usually keep a pool of opened connections,
   // this keeps the process running even after all work is done.
   // We need to exit explicitly.
+
   process.exit(0);
 }
 

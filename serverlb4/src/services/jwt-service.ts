@@ -3,6 +3,7 @@ import {promisify} from 'util';
 import {HttpErrors} from '@loopback/rest';
 import {inject} from '@loopback/core';
 import {TokenServiceBindings, TokenServiceConstants} from './keys';
+import {MyUserProfile} from '../interceptors/types';
 const jwt = require('jsonwebtoken');
 const signAsync = promisify(jwt.sign);
 const verifyAsync = promisify(jwt.verify);
@@ -29,12 +30,12 @@ export class JWTService {
     return token;
   }
 
-  async verifyToken(token: string): Promise<UserProfile> {
+  async verifyToken(token: string): Promise<MyUserProfile> {
     if (!token) {
       throw new HttpErrors.Unauthorized(`Error verifying token: token is null`);
     }
 
-    let userProfile: UserProfile;
+    let userProfile: MyUserProfile;
     try {
       // decide user profile from token
       const decryptedToken = await verifyAsync(token, this.jwtSecret);
@@ -42,11 +43,12 @@ export class JWTService {
       // don't copy over token field
 
       userProfile = Object.assign(
-        {email: '', name: '', [securityId]: ''},
+        {email: '', name: '', [securityId]: '', permissions: []},
         {
           email: decryptedToken.email,
           name: decryptedToken.name,
           [securityId]: decryptedToken[securityId],
+          permissions: decryptedToken.permissions,
         },
       );
     } catch (error) {

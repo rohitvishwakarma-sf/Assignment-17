@@ -77,6 +77,7 @@ export class User extends Entity {
 
   @belongsTo(() => Role, {name: 'roles'})
   roleKey: string;
+
   @property({
     type: 'date',
     default: 'now',

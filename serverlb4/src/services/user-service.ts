@@ -1,17 +1,22 @@
-import {UserService} from '@loopback/authentication';
+import {AuthenticationBindings, UserService} from '@loopback/authentication';
 import {repository} from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import {UserProfile, securityId} from '@loopback/security';
-import {inject} from '@loopback/core';
+import {inject, Setter} from '@loopback/core';
 import {User} from '../models';
-import {Credentials, UserRepository} from '../repositories';
+import {Credentials, RoleRepository, UserRepository} from '../repositories';
 import {BcryptHasher} from './hash.password.bcrypt';
 import {PasswordHasherBindings} from './keys';
+import {MyUserProfile} from '../interceptors/types';
+import {pick} from 'lodash';
+import {PermissionKeys} from '../authorization/permission-keys';
 
 export class MyUserService implements UserService<User, Credentials> {
   constructor(
     @repository(UserRepository)
     public userRepository: UserRepository,
+    @repository(RoleRepository)
+    public roleRepository: RoleRepository,
     @inject(PasswordHasherBindings.PASSWORD_HASHER)
     public hasher: BcryptHasher,
   ) {}
@@ -20,6 +25,7 @@ export class MyUserService implements UserService<User, Credentials> {
       where: {
         email: credentials.email,
       },
+      include: [{relation: 'roles'}],
     });
     if (!foundUser) {
       throw new HttpErrors.NotFound(
@@ -37,12 +43,22 @@ export class MyUserService implements UserService<User, Credentials> {
 
     return foundUser;
   }
-  convertToUserProfile(user: User): UserProfile {
+  convertToUserProfile(user: User): MyUserProfile {
     let userName = user.firstName;
     if (user.lastname) {
       userName += ' ' + user.lastname;
     }
 
-    return {email: user.email, name: userName, [securityId]: `${user.id!}`};
+    const userPermissions = (user as any).roles.permissions;
+    console.log(user);
+
+    const myuserprofile = {
+      email: user.email,
+      name: userName,
+      [securityId]: `${user.id!}`,
+      permissions: userPermissions,
+    };
+
+    return myuserprofile;
   }
 }
