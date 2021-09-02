@@ -51,9 +51,15 @@ export class RowComponent implements OnInit {
   btnSaveClick() {
     this.editMode = false;
     this.saving = true;
-    this.usersService.save(this.user).subscribe(() => {
-      this.saving = false;
-    });
+    this.usersService.save(this.user).subscribe(
+      () => {
+        this.saving = false;
+      },
+      (error) => {
+        console.log('error occured');
+        this.user = JSON.parse(JSON.stringify(this.oldUser));
+      }
+    );
   }
   btnCancelClick() {
     this.editMode = false;
